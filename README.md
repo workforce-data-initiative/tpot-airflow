@@ -11,6 +11,7 @@ Table of Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Deployment](#deployment)
 - [Support](#support)
 - [Contributing](#contributing)
 
@@ -22,12 +23,15 @@ git clone https://github.com/workforce-data-initiative/tpot-airflow.git && cd tp
 ```
 
 Install requirements (preferably in a virtual environment)
-
 ```bash
 pip install -r requirements.txt
 ```
-
 Note that the project is using Python 3.6.2 in development
+
+Prepare the home for `airflow`:
+```bash
+export AIRFLOW_HOME=$(pwd)
+```
 
 ## Usage
 
@@ -36,9 +40,16 @@ Initialize the meta database by running:
 airflow initdb
 ```
 
-Start the airflow webserver and expolre the UI at [localhost:8080](http://localhost:8080).
+Setup airflow:
 ```bash
-airflow runserver
+python remove_airflow_examples.py
+RUN airflow resetdb -y
+RUN python customize_dashboard.py
+```
+
+Start the airflow webserver and explore the UI at [localhost:8080](http://localhost:8080).
+```bash
+airflow webserver
 ```
 Note that you have optional arguments:
 
@@ -49,6 +60,15 @@ Note that you have optional arguments:
 #### Aside
 
 You can customize the dashboard to read *TPOT - Airflow* instead of *Airflow* by running `python customize_dashboard.py`
+
+## Deployment
+#### Docker
+
+RUN `docker build -t tpot-airflow -f Dockerfile.dev .`
+
+#### Heroku
+
+RUN `sh heroku.sh`
 
 ## Support
 

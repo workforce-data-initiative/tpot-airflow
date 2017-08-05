@@ -102,3 +102,7 @@ ENV/
 
 # VSCode
 .vscode/
+
+airflow.cfg
+airflow.db
+unittests.cfg
