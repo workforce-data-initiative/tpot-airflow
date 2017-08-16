@@ -35,19 +35,21 @@ export AIRFLOW_HOME=$(pwd)
 
 ## Usage
 
-Initialize the meta database by running:
+1. Initialize the meta database by running:
 ```bash
 airflow initdb
 ```
 
-Setup airflow:
+2. Setup airflow:
 ```bash
 python remove_airflow_examples.py
-RUN airflow resetdb -y
-RUN python customize_dashboard.py
+airflow resetdb -y
+python customize_dashboard.dev.py (Optional)
 ```
 
-Start the airflow webserver and explore the UI at [localhost:8080](http://localhost:8080).
+  Running `python customize_dashboard.dev.py` customizes the dashboard to read *TPOT - Airflow* instead of *Airflow*  
+
+3. Start the airflow webserver and explore the UI at [localhost:8080](http://localhost:8080).
 ```bash
 airflow webserver
 ```
@@ -56,10 +58,6 @@ Note that you have optional arguments:
 - `-p=8080, --port=8080` to specify which port to run the server
 - `-w=4, --workers=4` to specify the number of workers to run the webserver on
 
-
-#### Aside
-
-You can customize the dashboard to read *TPOT - Airflow* instead of *Airflow* by running `python customize_dashboard.py`
 
 ## Deployment
 #### Docker
