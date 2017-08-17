@@ -35,6 +35,10 @@ export AIRFLOW_HOME=$(pwd)
 
 ## Usage
 
+Follow through steps 1 to 3:
+
+_Running `sh setup.sh` is step 1, 2 and 3 in a single script_. Then get to [localhost:8080](http://localhost:8080).
+
 1. Initialize the meta database by running:
 ```bash
 airflow initdb
