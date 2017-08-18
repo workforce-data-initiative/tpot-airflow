@@ -1,0 +1,5 @@
+.vscode/
+airflow.cfg
+airflow.db
+unittests.cfg
+airflow-webserver.pid

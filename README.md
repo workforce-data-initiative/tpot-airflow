@@ -11,6 +11,7 @@ Table of Contents
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [Deployment](#deployment)
 - [Support](#support)
 - [Contributing](#contributing)
 
@@ -22,23 +23,39 @@ git clone https://github.com/workforce-data-initiative/tpot-airflow.git && cd tp
 ```
 
 Install requirements (preferably in a virtual environment)
-
 ```bash
 pip install -r requirements.txt
 ```
-
 Note that the project is using Python 3.6.2 in development
+
+Prepare the home for `airflow`:
+```bash
+export AIRFLOW_HOME=$(pwd)
+```
 
 ## Usage
 
-Initialize the meta database by running:
+Follow through steps 1 to 3:
+
+_Running `sh setup.sh` is step 1, 2 and 3 in a single script_. Then get to [localhost:8080](http://localhost:8080).
+
+1. Initialize the meta database by running:
 ```bash
 airflow initdb
 ```
 
-Start the airflow webserver and expolre the UI at [localhost:8080](http://localhost:8080).
+2. Setup airflow:
 ```bash
-airflow runserver
+python remove_airflow_examples.py
+airflow resetdb -y
+python customize_dashboard.dev.py (Optional)
+```
+
+  Running `python customize_dashboard.dev.py` customizes the dashboard to read *TPOT - Airflow* instead of *Airflow*  
+
+3. Start the airflow webserver and explore the UI at [localhost:8080](http://localhost:8080).
+```bash
+airflow webserver
 ```
 Note that you have optional arguments:
 
@@ -46,9 +63,14 @@ Note that you have optional arguments:
 - `-w=4, --workers=4` to specify the number of workers to run the webserver on
 
 
-#### Aside
+## Deployment
+#### Docker
 
-You can customize the dashboard to read *TPOT - Airflow* instead of *Airflow* by running `python customize_dashboard.py`
+RUN `docker build -t tpot-airflow -f Dockerfile.dev .`
+
+#### Heroku
+
+RUN `sh heroku.sh`
 
 ## Support
 
