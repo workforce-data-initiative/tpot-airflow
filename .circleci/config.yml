@@ -1,0 +1,11 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/app
+    docker:
+      - image: python:3.6.0
+    steps:
+      - checkout
+      - run:
+          name: Install Python deps
+          command: pip install -r requirements.txt
