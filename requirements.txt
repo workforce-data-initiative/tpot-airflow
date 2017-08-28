@@ -1,1 +1,5 @@
-airflow==1.8.0
+airflow
+airflow[celery]
+airflow[crypto]
+airflow[postgres]
+airflow[rabbitmq]
