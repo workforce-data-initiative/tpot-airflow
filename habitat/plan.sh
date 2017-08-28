@@ -6,17 +6,13 @@ pkg_maintainer="jee@brighthive.io, aretha@brighthive.io, stanley@brighthive.io"
 pkg_filename=${pkg_name}-${pkg_version}.tar.gz
 pkg_upstream_url="https://github.com/workforce-data-initiative/tpot-airflow.git"
 pkg_build_deps=(core/virtualenv core/gcc)
-pkg_deps=(core/bash core/coreutils core/python)
+pkg_deps=(core/bash core/coreutils core/python core/shadow)
 pkg_exports=([port]=listening_port)
 pkg_exposes=(port)
 
-do_verify () {
-  return 0
-}
-
-do_clean() {
-  return 0
-}
+pkg_lib_dirs=(lib)
+pkg_include_dirs=(include)
+pkg_bin_dirs=(bin)
 
 do_unpack() {
   # create a env variable for the project root
