@@ -17,18 +17,24 @@ Table of Contents
 
 ## Installation
 
-Clone the project and cd into the folder.
+1. Clone the project and cd into the folder.
 ```bash
 git clone https://github.com/workforce-data-initiative/tpot-airflow.git && cd tpot-airflow
 ```
 
-Install requirements (preferably in a virtual environment)
+>> To test it out real quick using Docker just run:
+>> ```bash
+>> docker-compose up
+>> ```
+>> and explore the UI at [localhost:8080](http://localhost:8080). Otherwise proceed.
+
+2. Install requirements (preferably in a virtual environment)
 ```bash
 pip install -r requirements.txt
 ```
 Note that the project is using Python 3.6.2 in development
 
-Prepare the home for `airflow`:
+3. Prepare the home for `airflow`:
 ```bash
 export AIRFLOW_HOME=$(pwd)
 ```
