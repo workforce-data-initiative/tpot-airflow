@@ -18,4 +18,3 @@ source {{pkg.path}}/venv/bin/activate
 
 echo "Initializing the airflow db..."
 exec airflow initdb
-
