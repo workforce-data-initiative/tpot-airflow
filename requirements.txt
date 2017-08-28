@@ -1,4 +1,4 @@
-airflow
+airflow==1.8.0
 airflow[celery]
 airflow[crypto]
 airflow[postgres]
