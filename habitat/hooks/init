@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#!{{pkgPathFor "core/bash"}}/bin/bash -e
 
 # Allows to see errors as they occur
 exec 2>&1
@@ -12,7 +12,7 @@ export AIRFLOW_HOME={{pkg.svc_var_path}}
 
 source {{pkg.svc_config_path}}/helpers.sh
 
-create_db_superuser
+create_airflow_user
 # set_dir_permissions
 
 echo "Initializing the airflow db..."
