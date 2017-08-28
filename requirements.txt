@@ -1,5 +1,5 @@
 airflow==1.8.0
-airflow[celery]
+airflow[celery]==1.8.0
 airflow[crypto]
 airflow[postgres]
 airflow[rabbitmq]
