@@ -2,3 +2,8 @@
 
 # Allows to see errors as they occur
 exec 2>&1
+
+cd {{pkg.svc_var_path}}
+. venv/bin/activate
+
+airflow webserver -p={{cfg.listening_port}}
