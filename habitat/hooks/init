@@ -5,24 +5,17 @@ exec 2>&1
 
 echo "Executing init hook"
 
+# source the helper to export PYTHON_PATH and AIRFLOW_HOME for us
+source "{{pkg.path}}/habitat/runtime_environment.sh"
+
 ln -fs {{pkg.path}}/*.py {{pkg.svc_var_path}}
 ln -fs {{pkg.path}}/dags {{pkg.svc_var_path}}
+ln -fs {{pkg.path}}/habitat {{pkg.svc_var_path}}
+ln -fs {{pkg.path}}/habitat/runtime_environment.sh {{pkg.svc_var_path}}
+ln -fs {{pkg.path}}/venv {{pkg.svc_var_path}}
 
-export AIRFLOW_HOME={{pkg.svc_var_path}}
-
-source {{pkg.svc_config_path}}/helpers.sh
-
-create_airflow_user
-# set_dir_permissions
+source {{pkg.path}}/venv/bin/activate
 
 echo "Initializing the airflow db..."
-exec chpst -U {{cfg.superuser.name}} -u {{cfg.superuser.name}} airflow initdb
-
-echo "Removing airflow examples ..."
-python remove_airflow_example.py
-
-echo "Resetting the airflow server ..."
-exec chpst -U {{cfg.superuser.name}} -u {{cfg.superuser.name}} airflow resetdb -y
-
-python customize_dashboard.py
+exec airflow initdb
 
