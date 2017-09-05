@@ -1,0 +1,21 @@
+#!{{pkgPathFor "core/bash"}}/bin/bash -e
+
+# Allows to see errors as they occur
+exec 2>&1
+
+echo "Executing init hook"
+
+# source the helper to export PYTHON_PATH and AIRFLOW_HOME for us
+source "{{pkg.path}}/habitat/runtime_environment.sh"
+
+ln -fs {{pkg.path}}/*.py {{pkg.svc_var_path}}
+ln -fs {{pkg.path}}/dags {{pkg.svc_var_path}}
+ln -fs {{pkg.path}}/habitat {{pkg.svc_var_path}}
+ln -fs {{pkg.path}}/habitat/runtime_environment.sh {{pkg.svc_var_path}}
+ln -fs {{pkg.path}}/venv {{pkg.svc_var_path}}
+
+source {{pkg.path}}/venv/bin/activate
+
+echo "Initializing the airflow db..."
+exec airflow initdb
+
