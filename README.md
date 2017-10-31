@@ -5,6 +5,7 @@ Orchestration of data processing tasks to power the reporting TPOT ETP API
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3](https://pyup.io/repos/github/workforce-data-initiative/tpot-airflow/python-3-shield.svg)](https://pyup.io/repos/github/workforce-data-initiative/tpot-airflow/)
 [![Updates](https://pyup.io/repos/github/workforce-data-initiative/tpot-airflow/shield.svg)](https://pyup.io/repos/github/workforce-data-initiative/tpot-airflow/)
+[![CircleCI](https://circleci.com/gh/workforce-data-initiative/tpot-airflow.svg?style=svg)](https://circleci.com/gh/workforce-data-initiative/tpot-airflow)
 
 
 Table of Contents
