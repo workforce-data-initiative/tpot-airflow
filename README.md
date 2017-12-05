@@ -28,7 +28,8 @@ git clone https://github.com/workforce-data-initiative/tpot-airflow.git && cd tp
 >> docker-compose up
 >> ```
 >> and explore the UI at [localhost:8080](http://localhost:8080). Otherwise proceed.
->> to run the scheduler find the `CONTAINER ID` for airflow container
+>>
+>> To run the airflow scheduler find the `CONTAINER ID` for airflow container
 >> ```
 >> docker ps
 >> ```
