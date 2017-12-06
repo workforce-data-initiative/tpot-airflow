@@ -16,11 +16,11 @@ default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
     'start_date': datetime(2017, 12, 1),
-    'email': ['jacob@superconductivehealth.com'],
+    'email': ['test@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,
-    'retries': 5,
-    'retry_delay': timedelta(minutes=5)
+    'retries': 20,
+    'retry_delay': timedelta(minutes=1)
 }
 
 dag = DAG('s3_dag_test', default_args=default_args, schedule_interval= '@once')
