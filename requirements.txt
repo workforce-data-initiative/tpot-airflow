@@ -1,5 +1,5 @@
 cryptography==2.1.4
-boto
+boto==2.48.0
 airflow==1.8.0
 airflow[celery]==1.8.0
 airflow[crypto]==1.8.0
