@@ -7,8 +7,6 @@ https://stackoverflow.com/questions/39997714/airflow-s3-connection-using-ui/4077
 """
 
 from airflow import DAG
-#from airflow.operators import SimpleHttpOperator, HttpSensor, EmailOperator
-#from airflow.operators import BashOperator
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.sensors import S3KeySensor
 from datetime import datetime, timedelta
@@ -19,15 +17,16 @@ default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
     'start_date': datetime(2017, 12, 1),
-    'email': ['test@example.com'],
+    'email': ['enginnering@brighthive.io'],
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 20,
     'retry_delay': timedelta(minutes=1)
 }
 
+
 def grab_file():
-    s3_conn_id='my_conn_S3'
+    s3_conn_id = 'my_conn_S3'
     s3 = S3Hook(s3_conn_id)
 
     key_label = "file-to-watch-3.txt"
@@ -36,7 +35,8 @@ def grab_file():
 
     return key_string
 
-dag = DAG('s3_dag_test', default_args=default_args, schedule_interval= '@once')
+
+dag = DAG('s3_connect_dag', default_args=default_args, schedule_interval='@once')
 
 file_processor = PythonOperator(
     task_id='grab_file_from_s3',
