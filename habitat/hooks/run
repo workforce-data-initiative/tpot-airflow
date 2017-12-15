@@ -1,0 +1,27 @@
+#!/bin/bash -xe
+
+# Allows to see errors as they occur
+exec 2>&1
+
+echo "Executing running hook"
+
+source "{{pkg.path}}/habitat/runtime_environment.sh" 
+
+cd {{pkg.svc_var_path}}
+
+echo "Activating the virtual env ..."
+source "venv/bin/activate"
+
+echo "Removing airflow examples ..."
+python remove_airflow_examples.py
+
+echo "Resetting the airflow server ..."
+source "{{pkg.svc_config_path}}/helpers.sh"
+
+reset_airflow_db
+
+
+echo "Customizing dashboard ..."
+python customize_dashboard.dev.py
+
+exec airflow webserver -p={{cfg.listening_port}}
