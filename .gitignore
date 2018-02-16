@@ -116,3 +116,10 @@ logs/
 
 # TODO
 TODO.md
+
+# System files
+.DS_Store
+
+# Dev files
+docker-compose.override.yml
+*.pem

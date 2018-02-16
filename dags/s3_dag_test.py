@@ -14,9 +14,9 @@ from airflow.hooks.S3_hook import S3Hook
 import boto
 
 default_args = {
-    'owner': 'airflow',
+    'owner': 'brighthive',
     'depends_on_past': False,
-    'start_date': datetime(2017, 12, 1),
+    'start_date': datetime(2018, 2, 15),
     'email': ['enginnering@brighthive.io'],
     'email_on_failure': False,
     'email_on_retry': False,
@@ -29,8 +29,8 @@ def grab_file():
     s3_conn_id = 'my_conn_S3'
     s3 = S3Hook(s3_conn_id)
 
-    key_label = "file-to-watch-3.txt"
-    key = s3.get_key(key_label, 'superconductive-airflow-bucket')
+    key_label = "file-to-watch*.txt"
+    key = s3.get_key(key_label, 'int1-source')
     key_string = key.get_contents_as_string()
 
     return key_string
@@ -47,7 +47,7 @@ file_trigger = S3KeySensor(
     task_id='check_s3_for_file_in_s3',
     bucket_key='file-to-watch-*',
     wildcard_match=True,
-    bucket_name='superconductive-airflow-bucket',
+    bucket_name='int1-source',
     s3_conn_id='my_conn_S3',
     timeout=18*60*60,
     poke_interval=120,
