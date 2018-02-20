@@ -1,8 +1,14 @@
 """
-S3 Sensor Connection Test
+S3 Sensor Connection and grab file
 
 NOTE FOR THIS TO WORK YOU MUST SET UP AN S3 CONNECTION PER THESE INSTRUCTIONS:
 https://stackoverflow.com/questions/39997714/airflow-s3-connection-using-ui/40774361#40774361
+
+Here are other references:
+https://gist.github.com/msumit/40f7905d409fe3375c9a01fa73070b73
+
+And of course, the main tutorial:
+https://airflow.incubator.apache.org/tutorial.html
 
 """
 
@@ -11,7 +17,6 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.operators.sensors import S3KeySensor
 from datetime import datetime, timedelta
 from airflow.hooks.S3_hook import S3Hook
-import boto
 
 default_args = {
     'owner': 'brighthive',
@@ -26,11 +31,11 @@ default_args = {
 
 
 def grab_file():
-    s3_conn_id = 'my_conn_S3'
-    s3 = S3Hook(s3_conn_id)
+    aws_conn_id = 'int-source'
+    s3 = S3Hook(aws_conn_id)
 
-    key_label = "file-to-watch*.txt"
-    key = s3.get_key(key_label, 'int1-source')
+    key_label = "*.txt"
+    key = s3.get_key(key_label, 'integration-source')
     key_string = key.get_contents_as_string()
 
     return key_string
@@ -44,11 +49,11 @@ file_processor = PythonOperator(
     dag=dag)
 
 file_trigger = S3KeySensor(
-    task_id='check_s3_for_file_in_s3',
-    bucket_key='file-to-watch-*',
+    task_id='check_for_file_in_s3',
+    bucket_key='*',
     wildcard_match=True,
-    bucket_name='int1-source',
-    s3_conn_id='my_conn_S3',
+    bucket_name='integration-source',
+    aws_conn_id='int-source',
     timeout=18*60*60,
     poke_interval=120,
     dag=dag)

@@ -19,35 +19,34 @@ Table of Contents
 ## Installation
 
 1. Clone the project and cd into the folder.
-```bash
-git clone https://github.com/workforce-data-initiative/tpot-airflow.git && cd tpot-airflow
-```
 
->> To test it out real quick using Docker just run:
->> ```bash
->> docker-compose up
->> ```
->> and explore the UI at [localhost:8080](http://localhost:8080). Otherwise proceed.
->>
->> To run the airflow scheduler find the `CONTAINER ID` for airflow container
->> ```
->> docker ps
->> ```
->> then run the scheduler in that same container
->> ```
->> docker exec -it <CONTAINER ID> airflow scheduler
->> ```
+    ```bash
+    git clone https://github.com/workforce-data-initiative/tpot-airflow.git && cd tpot-airflow
+    ```
+
+    To test it out real quick using Docker just run:
+    ```bash
+    docker-compose up
+    ```
+
+    and explore the UI at [localhost:8080](http://localhost:8080).
+
+    Then run the scheduler in that same container
+
+    ```bash
+    docker-compose exec web airflow scheduler
+    ```
 
 2. Install requirements (preferably in a virtual environment)
-```bash
-pip install -r requirements.txt
-```
-Note that the project is using Python 3.6.2 in development
+    ```bash
+    pip install -r requirements.txt
+    ```
+    Note that the project is using Python 3.6.2 in development
 
 3. Prepare the home for `airflow`:
-```bash
-export AIRFLOW_HOME=$(pwd)
-```
+    ```bash
+    export AIRFLOW_HOME=$(pwd)
+    ```
 
 ## Usage
 
@@ -56,23 +55,24 @@ Follow through steps 1 to 3:
 _Running `sh setup.sh` is step 1, 2 and 3 in a single script_. Then get to [localhost:8080](http://localhost:8080).
 
 1. Initialize the meta database by running:
-```bash
-airflow initdb
-```
+    ```bash
+    airflow initdb
+    ```
 
 2. Setup airflow:
-```bash
-python remove_airflow_examples.py
-airflow resetdb -y
-python customize_dashboard.dev.py (Optional)
-```
+    ```bash
+    python remove_airflow_examples.py
+    airflow resetdb -y
+    export APP=TPOT (Optional)
+    python customize_dashboard.dev.py (Optional)
+    ```
 
   Running `python customize_dashboard.dev.py` customizes the dashboard to read *TPOT - Airflow* instead of *Airflow*  
 
 3. Start the airflow webserver and explore the UI at [localhost:8080](http://localhost:8080).
-```bash
-airflow webserver
-```
+    ```bash
+    airflow webserver
+    ```
 Note that you have optional arguments:
 
 - `-p=8080, --port=8080` to specify which port to run the server
@@ -109,7 +109,7 @@ RUN `sh heroku.sh`
 For you to ssh into an already running instance, ask for the `.pem` and run:
 
 ```bash
-sh -i "<>.pem" ec2-user@<Public DNS>
+ssh -i "<>.pem" ec2-user@<Public DNS>
 ```
 
 For example: `ssh -i "airflow.pem" ec2-user@random.compute-1.amazonaws.com`
