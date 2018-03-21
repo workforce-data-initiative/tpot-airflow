@@ -16,9 +16,9 @@ COPY . .
 # Run the following commands
 ENV AIRFLOW_HOME=/usr/src/app
 RUN airflow initdb
-RUN python remove_airflow_examples.py
+RUN python config/remove_airflow_examples.py
 RUN airflow resetdb -y
-RUN python customize_dashboard.py
+RUN python config/customize_dashboard.py
 
 # EXPOSE port to be used
 EXPOSE 8080
