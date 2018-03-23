@@ -10,14 +10,14 @@ def print_world():
 
 
 default_args = {
-    'owner': 'me',
+    'owner': 'Brighthive Quality Control',
     'start_date': dt.datetime(2018, 1, 1),
     'retries': 1,
     'retry_delay': dt.timedelta(minutes=5),
 }
 
 
-with DAG('airflow_tutorial_v01',
+with DAG('internal_testing_v01',
          default_args=default_args,
          schedule_interval='@daily',
          ) as dag:

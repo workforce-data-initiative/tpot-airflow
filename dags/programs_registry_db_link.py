@@ -1,5 +1,8 @@
+import logging
 import datetime as dt
 from urllib.parse import urlparse
+import os
+
 import psycopg2
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
@@ -7,8 +10,13 @@ from airflow.operators.bash_operator import BashOperator
 from airflow.operators.sensors import S3KeySensor
 from airflow.hooks import postgres_hook, S3_hook
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger('Brighthive Engineering team')
+
 
 def grab_file():
+    logger.info('Grabbing file')
+
     aws_conn_id = 'integration'
     s3 = S3_hook.S3Hook(aws_conn_id)
 
@@ -20,16 +28,19 @@ def grab_file():
 
 
 def commit_to_db():
-    pg_hook = postgres_hook.PostgresHook(postgres_conn_id='registry')
-    # pg_hook.run(SQL) but not for this case ...
+    # I'll revisit this later
 
-    result = urlparse(pg_hook)
+    # pg_hook = postgres_hook.PostgresHook(postgres_conn_id='registry')
+    # pg_hook.run()
+    DB = os.getenv('DATABASE_URL')
+    result = urlparse(DB)
 
     username = result.username
     password = result.password
     database = result.path[1:]
     hostname = result.hostname
 
+    logger.info('Connecting to database {}'.format(DB))
     connection = psycopg2.connect(
         database=database,
         user=username,
@@ -37,14 +48,18 @@ def commit_to_db():
         host=hostname
     )
 
+    logger.info('Database connected')
+    logger.debug('Database {} is on host {}'.format(database, hostname))
     cur = connection.cursor()
-    cur.copy_from(f, 'organization', sep=',')
+
+    # the 'organization' below can be replaced by any table in the db
+    cur.copy_from(grab_file(), 'organization', sep=',')
 
     connection.commit()
 
 
 default_args = {
-    'owner': 'stanley@brighthive.io',
+    'owner': 'matt@brighthive.io',
     'start_date': dt.datetime(2017, 3, 10),
     'retries': 5,
     'retry_delay': dt.timedelta(minutes=1),
@@ -56,7 +71,11 @@ with DAG('programs_registry_db',
          ) as dag:
 
     s3_connect = BashOperator(task_id='s3_connect',
-                              bash_command='echo "Listening for s3 bucket upload"')
+                              bash_command='echo \
+                              "Listening for file upload to s3"')
+
+    grab_file = PythonOperator(task_id='grab_file',
+                               python_callable=grab_file)
 
     commit_to_db = PythonOperator(task_id='commit_to_db',
                                   python_callable=commit_to_db)
@@ -73,4 +92,5 @@ target_file_trigger = S3KeySensor(
 
 
 target_file_trigger.set_upstream(s3_connect)
-commit_to_db.set_upstream(target_file_trigger)
+grab_file.set_upstream(target_file_trigger)
+commit_to_db.set_upstream(grab_file)

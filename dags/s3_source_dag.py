@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
 from airflow.hooks.S3_hook import S3Hook
 
 default_args = {
-    'owner': 'brighthive',
+    'owner': 'engineering@brighthive.io',
     'depends_on_past': False,
     'start_date': datetime(2018, 2, 15),
     'email': ['enginnering@brighthive.io'],

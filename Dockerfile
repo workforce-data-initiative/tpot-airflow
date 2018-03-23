@@ -15,6 +15,7 @@ COPY . .
 
 # Run the following commands
 ENV AIRFLOW_HOME=/usr/src/app
+ENV APP=COLORADO
 RUN airflow initdb
 RUN python config/remove_airflow_examples.py
 RUN airflow resetdb -y
