@@ -61,10 +61,10 @@ _Running `sh setup.sh` is step 1, 2 and 3 in a single script_. Then get to [loca
 
 2. Setup airflow:
     ```bash
-    python remove_airflow_examples.py
+    python config/remove_airflow_examples.py
     airflow resetdb -y
-    export APP=TPOT (Optional)
-    python customize_dashboard.dev.py (Optional)
+    export APP=TPOT [or some other name] (Optional)
+    python config/customize_dashboard.dev.py (Optional)
     ```
 
   Running `python customize_dashboard.dev.py` customizes the dashboard to read *TPOT - Airflow* instead of *Airflow*  

@@ -1,6 +1,7 @@
 export AIRFLOW_HOME=$(pwd)
 airflow initdb
-python remove_airflow_examples.py
+python config/remove_airflow_examples.py
 airflow resetdb -y
-python customize_dashboard.dev.py
-airflow webserver
+python config/customize_dashboard.dev.py
+airflow webserver -d
+airflow scheduler

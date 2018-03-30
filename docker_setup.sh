@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export DC_VER="1.16.1"
+export DC_VER="1.18.0"
 
 # Install docker and run
 sudo yum install -y docker
