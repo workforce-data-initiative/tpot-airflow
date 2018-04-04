@@ -16,9 +16,8 @@ COPY . .
 # Run the following commands
 ENV AIRFLOW_HOME=/usr/src/app
 ENV APP=COLORADO
+RUN python config/configure_airflow.cfg.py
 RUN airflow initdb
-RUN python config/remove_airflow_examples.py
-RUN airflow resetdb -y
 RUN python config/customize_dashboard.py
 
 # EXPOSE port to be used
