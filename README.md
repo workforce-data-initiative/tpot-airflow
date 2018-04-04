@@ -16,6 +16,15 @@ Table of Contents
 - [Support](#support)
 - [Contributing](#contributing)
 
+## DAGS
+
+Before you go very far, note that you'll need to enter 3 key values into the file [dags/programs_registry_db_link.py](dags/programs_registry_db_link.py) for now:
+- `aws_access_key_id` in line 33 of [dags/programs_registry_db_link.py](dags/programs_registry_db_link.py#L33)
+- `aws_secret_access_key` in line 34 of [dags/programs_registry_db_link.py](dags/programs_registry_db_link.py#L34)
+- `DB` in line 42 of [dags/programs_registry_db_link.py](dags/programs_registry_db_link.py#L42)
+
+Only `programs_registry_db_link` DAG is fully functional.
+
 ## Installation
 
 1. Clone the project and cd into the folder.
@@ -24,18 +33,23 @@ Table of Contents
     git clone https://github.com/workforce-data-initiative/tpot-airflow.git && cd tpot-airflow
     ```
 
-    To test it out real quick using Docker just run:
+    If you have a Google Console project for OAuth 2.0, run the webserver and scheduler in that same container:
+
     ```bash
-    docker-compose up
+    export GOOGLE_CLIENT_ID=...
+    export GOOGLE_CLIENT_SECRET=...
+    docker-compose up -d
+    docker-compose exec web airflow scheduler
+    ```
+
+    To test it out real quick using Docker just change line `179` in [airflow.cfg](airflow.cfg#L179) and change it to *authenticate = False* then run the webserver and scheduler in that same container:
+
+    ```bash
+    docker-compose up -d
+    docker-compose exec web airflow scheduler
     ```
 
     and explore the UI at [localhost:8080](http://localhost:8080).
-
-    Then run the scheduler in that same container
-
-    ```bash
-    docker-compose exec web airflow scheduler
-    ```
 
 2. Install requirements (preferably in a virtual environment)
     ```bash
@@ -46,6 +60,8 @@ Table of Contents
 3. Prepare the home for `airflow`:
     ```bash
     export AIRFLOW_HOME=$(pwd)
+    export GOOGLE_CLIENT_ID=... (optional as long as you edited airflow.cfg)
+    export GOOGLE_CLIENT_SECRET=... (optional as long as you edited airflow.cfg)
     ```
 
 ## Usage
@@ -54,12 +70,7 @@ Follow through steps 1 to 3:
 
 _Running `sh setup.sh` is step 1, 2 and 3 in a single script_. Then get to [localhost:8080](http://localhost:8080).
 
-1. Initialize the meta database by running:
-    ```bash
-    airflow initdb
-    ```
-
-2. Setup airflow:
+1. Setup airflow:
     ```bash
     python config/remove_airflow_examples.py
     airflow resetdb -y
@@ -68,6 +79,11 @@ _Running `sh setup.sh` is step 1, 2 and 3 in a single script_. Then get to [loca
     ```
 
   Running `python customize_dashboard.dev.py` customizes the dashboard to read *TPOT - Airflow* instead of *Airflow*  
+
+2. Initialize the meta database by running:
+    ```bash
+    airflow initdb
+    ```
 
 3. Start the airflow webserver and explore the UI at [localhost:8080](http://localhost:8080).
     ```bash

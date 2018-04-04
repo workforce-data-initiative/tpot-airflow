@@ -16,10 +16,10 @@ COPY . .
 # Run the following commands
 ENV AIRFLOW_HOME=/usr/src/app
 ENV APP=COLORADO
+ARG GOOGLE_CLIENT_ID
+ARG GOOGLE_CLIENT_SECRET
+RUN python config/configure_airflow.cfg.py && python config/customize_dashboard.py
 RUN airflow initdb
-RUN python config/remove_airflow_examples.py
-RUN airflow resetdb -y
-RUN python config/customize_dashboard.py
 
 # Set command to run as soon as container is up
 CMD airflow webserver -p=$PORT
