@@ -4,6 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+      args:
+        - GOOGLE_CLIENT_ID
+        - GOOGLE_CLIENT_SECRET
     volumes:
       - ./dags:/usr/src/app/dags
       - ./logs:/usr/src/app/logs
