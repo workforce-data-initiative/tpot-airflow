@@ -1,4 +1,4 @@
-boto3==1.7.26
+boto3==1.9.179
 cryptography==2.2.2
 apache-airflow==1.9.0
 apache-airflow[celery]==1.9.0
