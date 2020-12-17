@@ -4,6 +4,6 @@ apache-airflow==2.0.0
 apache-airflow[celery]==2.0.0
 apache-airflow[crypto]==2.0.0
 apache-airflow[postgres]==2.0.0
-apache-airflow[rabbitmq]==1.9.0
+apache-airflow[rabbitmq]==2.0.0
 psycopg2-binary==2.7.4
 ipdb==0.11
