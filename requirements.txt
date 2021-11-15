@@ -3,7 +3,7 @@ cryptography==2.2.2
 apache-airflow==2.2.2
 apache-airflow[celery]==2.2.2
 apache-airflow[crypto]==2.2.2
-apache-airflow[postgres]==1.9.0
+apache-airflow[postgres]==2.2.2
 apache-airflow[rabbitmq]==1.9.0
 psycopg2-binary==2.7.4
 ipdb==0.11
